@@ -2,6 +2,8 @@
 # Deterministic: no network, no randomness, no time or date calls.
 # Writes a 1024x1024 PNG under 1 MiB to /output/entry.png.
 # Twelve stories across regions and fields, each with place and detail.
+# Fonts are bundled in this repo (DejaVuSans*.ttf) so the program runs
+# anywhere, even where the system has no fonts installed.
 import os
 import textwrap
 from PIL import Image, ImageDraw, ImageFont
@@ -13,9 +15,11 @@ WHITE = (255, 255, 255)
 DARK = (20, 30, 40)
 GREY = (70, 80, 90)
 
+HERE = os.path.dirname(os.path.abspath(__file__))
+
 def font(bold, size):
-    p = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf" if bold else "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-    return ImageFont.truetype(p, size)
+    name = "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"
+    return ImageFont.truetype(os.path.join(HERE, name), size)
 
 img = Image.new("RGB", (W, H), BG)
 d = ImageDraw.Draw(img)
